@@ -1,13 +1,3 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const cors = require('cors');
-const app = express();
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;  // IMPORTANT: use environment variable!
-
-app.use(cors());
-app.use(express.json());
-
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
@@ -19,19 +9,19 @@ app.post('/chat', async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: "gpt-4o",  // Or whatever model
         messages: [{ role: "user", content: userMessage }]
       })
     });
 
-    const data = await response.json();
-    res.json({ reply: data.choices[0].message.content });
-
+    const data = await response.json();  // <== this must succeed!
+    res.json({ reply: data.choices[0].message.content });  // <== must send JSON
   } catch (error) {
     console.error(error);
-    res.status(500).json({ reply: 'Server error talking to OpenAI.' });
+    res.status(500).json({ reply: 'Server error talking to OpenAI.' });  // Still send JSON on error
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
