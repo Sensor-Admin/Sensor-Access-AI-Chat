@@ -2,7 +2,7 @@ app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://sensor-access-ai-chat.vercel.app/chat', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
