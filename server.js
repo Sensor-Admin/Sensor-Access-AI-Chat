@@ -18,9 +18,8 @@ app.post('/chat', async (req, res) => {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [{ role: "user", content: userMessage }]
+        body: JSON.stringify({
+        assistant_id: "asst_SBtsRSsyAYO1ftTajSvRyzzb"
       })
     });
 
