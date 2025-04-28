@@ -19,7 +19,8 @@ app.post('/chat', async (req, res) => {
         'Content-Type': 'application/json'
       },
         body: JSON.stringify({
-        assistant_id: "asst_SBtsRSsyAYO1ftTajSvRyzzb"
+          model: "gpt-4o",  // or "gpt-4", "gpt-3.5-turbo"
+          messages: [{ role: "user", content: "Hello, how are you?" }]
       })
     });
 
