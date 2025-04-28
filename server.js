@@ -29,4 +29,9 @@ app.post('/chat', async (req, res) => {
 
   } catch (error) {
     console.error('Server error:', error);
-    res
+    res.status(500).json({ reply: 'Server error talking to OpenAI.' }); // 👈 still send JSON on error
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
