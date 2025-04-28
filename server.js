@@ -8,8 +8,13 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 app.use(cors());
 app.use(express.json());
 
+// ADD THIS 👇
+app.get('/', (req, res) => {
+  res.send('✅ Sensor Access AI Chat Server is running!');
+});
+
 app.post('/chat', async (req, res) => {
-  const userMessage = req.body.message;  // <-- This comes from the frontend!
+  const userMessage = req.body.message;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -19,17 +24,17 @@ app.post('/chat', async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "gpt-4o",  // or "gpt-4", "gpt-3.5-turbo"
-        messages: [{ role: "user", content: userMessage }]  // <-- use real user message
+        model: "gpt-4o",
+        messages: [{ role: "user", content: userMessage }]
       })
     });
 
-    const data = await response.json(); // 👈 parse OpenAI's response
-    res.json({ reply: data.choices[0].message.content }); // 👈 send JSON back to frontend
+    const data = await response.json();
+    res.json({ reply: data.choices[0].message.content });
 
   } catch (error) {
     console.error('Server error:', error);
-    res.status(500).json({ reply: 'Server error talking to OpenAI.' }); // 👈 still send JSON on error
+    res.status(500).json({ reply: 'Server error talking to OpenAI.' });
   }
 });
 
